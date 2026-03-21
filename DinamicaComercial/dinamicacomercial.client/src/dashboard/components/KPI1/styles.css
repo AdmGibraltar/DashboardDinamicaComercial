@@ -1,0 +1,42 @@
+.kpi-card {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04) !important;
+	border-top: 3px solid #00a3ff !important;
+	border-left: 0 !important;
+	border-right: 0 !important;
+	border-bottom: 0 !important;
+	border-radius: 8px;
+	transition: all 0.3s ease-in-out;
+}
+.kpi-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -6px rgba(0, 0, 0, 0.03) !important;
+}
+.custom-indicator {
+	width: 4px;
+	height: 24px;
+	background-color: #00a3ff;
+	border-radius: 50px;
+}
+.x-small {
+	font-size: 0.75rem;
+}
+.tracking-wider {
+	letter-spacing: 0.5px;
+}
+.bg-success-subtle {
+	background-color: #d1e7dd;
+}
+.text-success {
+	color: #198754 !important;
+}
+.card-total-highlight {
+    border-top: 5px solid #00a3ff !important;
+    background: linear-gradient(to bottom, #ffffff, #f8fcff);
+}
+.card-total-highlight .total-amount {
+    color: #0084d1;
+}
+.growth-abs {
+    font-size: 0.85rem !important;
+    letter-spacing: -0.2px;
+}

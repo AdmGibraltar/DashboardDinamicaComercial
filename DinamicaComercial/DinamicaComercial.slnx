@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="dinamicacomercial.client/dinamicacomercial.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="DinamicaComercial.Server/DinamicaComercial.Server.csproj" />
+</Solution>

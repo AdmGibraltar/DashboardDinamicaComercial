@@ -1,0 +1,6 @@
+@DinamicaComercial.Server_HostAddress = http://localhost:5033
+
+GET {{DinamicaComercial.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
