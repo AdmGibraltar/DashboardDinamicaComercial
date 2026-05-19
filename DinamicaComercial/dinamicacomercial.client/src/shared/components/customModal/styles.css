@@ -1,0 +1,21 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.animate__animated {
+    animation-duration: 0.5s;
+}
+
+.animate__bounceIn,
+.animate__bounceOut {
+    animation-duration: 0.6s;
+}
+
+.animate__zoomIn,
+.animate__zoomOut {
+    animation-duration: 0.4s;
+}
+
+.modal-footer {
+    border-top: none;
+}

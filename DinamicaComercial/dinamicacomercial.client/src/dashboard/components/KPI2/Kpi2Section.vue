@@ -7,21 +7,33 @@
 
 		<div class="row g-4">
 			<div class="col-12 col-xl-5">
-				<div class="card border-0 shadow-sm h-100 kpi-card">
+				<div class="card border-0 shadow-sm h-100 bg-white">
 					<div class="card-body d-flex flex-column align-items-center justify-content-center p-4">
-						<h6 class="text-muted fw-bold text-uppercase x-small mb-4 tracking-wider">Distribución de
-							Cartera</h6>
+						<h6 class="text-muted fw-bold text-uppercase x-small mb-4 tracking-wider">
+							Distribución de ventas
+						</h6>
+
 						<div class="chart-container">
-							<canvas id="behaviorChart" ref="chartCanvas"></canvas>
-							<div class="chart-center-text">
-								<span class="text-muted x-small">Cartera</span>
-								<span class="fw-bold text-dark fs-4">100%</span>
+							<template v-if="hasData">
+								<canvas ref="chartCanvas"></canvas>
+								<div class="chart-center-text">
+									<span class="fw-bold text-dark fs-4">100%</span>
+								</div>
+							</template>
+							<div v-else class="empty-chart-placeholder d-flex flex-column align-items-center justify-content-center">
+								<div class="empty-circle"></div>
+								<div class="chart-center-text">
+									<span class="text-muted small">Sin datos</span>
+								</div>
 							</div>
 						</div>
-						<div class="d-flex flex-wrap justify-content-center mt-4 gap-3 d-xl-none">
-							<div v-for="item in behaviorMetrics" :key="item.title" class="d-flex align-items-center">
-								<div class="status-dot me-1" :style="`background-color: ${item.color}`"></div>
-								<span class="x-small fw-bold text-muted">{{ item.title }}</span>
+
+						<div class="d-flex flex-wrap justify-content-center mt-4 gap-3">
+							<div v-for="item in kpiMetrics" :key="item.segmento" class="d-flex align-items-center">
+								<div class="status-dot-sm me-1" :style="{ backgroundColor: item.color }"></div>
+								<span class="x-small text-muted">
+                                    {{ item.segmento }} ({{ Number(item.porcentajeVentas).toFixed(1) }}%)
+                                </span>
 							</div>
 						</div>
 					</div>
@@ -32,31 +44,34 @@
 				<div class="row g-3">
 
 					<div class="col-12">
-						<div class="card border-0 shadow-sm bg-corporate text-white main-recurrence-slim">
-							<div class="card-body py-3 px-4">
-								<div class="row align-items-center">
-									<div class="col-md-5">
-										<span class="x-small fw-bold opacity-75 text-uppercase d-block mb-1">Mes
-											Actual</span>
-										<h2 class="fw-bold mb-0">$920,000</h2>
-										<div class="small opacity-90"><i class="bi bi-people-fill me-1"></i> 1,350 <span
-												class="x-small">Clientes</span></div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="past-period-highlight p-2 px-3 rounded-3">
-											<span class="x-small fw-bold opacity-75 text-uppercase d-block">Semestre
-												Pasado</span>
-											<div class="fw-bold h5 mb-0">$845,500</div>
-											<div class="x-small opacity-75">1,210 Clientes</div>
+						<div class="card card-kpi-featured shadow-sm bg-white py-2">
+							<div class="card-body px-4">
+								<div class="row align-items-center text-center text-md-start">
+									<div class="col-md-5 border-end-md">
+										<span class="x-small fw-bold text-muted text-uppercase d-block mb-1">Ingreso actual</span>
+										<h2 class="fw-bold mb-0 text-blue-accent">${{ kpi1Metrics?.totalVentas.toLocaleString() }}</h2>
+										<div class="small text-muted">
+											<FontAwesomeIcon :icon="['fas', 'users']" class="me-1" />
+											<strong class="fst-italic">{{ kpi1Metrics?.clientes }}</strong> Clientes
 										</div>
 									</div>
 
-									<div class="col-md-3 text-end border-start border-white border-opacity-25">
-										<span
-											class="x-small fw-bold opacity-75 text-uppercase d-block">Crecimiento</span>
-										<div class="h4 fw-bold mb-0">+8.2%</div>
-										<div class="x-small fw-bold text-white-50">+$74,500</div>
+									<div class="col-md-4 px-md-4">
+										<span class="x-small fw-bold text-muted text-uppercase d-block mb-1">Semestre pasado</span>
+										<div class="fw-bold h5 mb-0 text-secondary">${{ kpi1Metrics?.totalVentas6M.toLocaleString() }}</div>
+										<div class="x-small text-muted">
+											<FontAwesomeIcon :icon="['fas', 'users']" class="me-1" />
+											<strong>{{ kpi1Metrics?.clientes6M }}</strong> Clientes
+										</div>
+									</div>
+
+									<div class="col-md-3 text-md-end">
+										<span class="x-small fw-bold text-muted text-uppercase d-block mb-1">Crecimiento</span>
+										<div :class="[(kpi1Metrics?.crecimientoAbsoluto ?? -1) >= 0 ? 'text-success' : 'text-danger']"
+											class="h4 fw-bold mb-0">
+											{{ (kpi1Metrics?.crecimientoAbsoluto ?? -1) >= 0 ? '+' : '-' }}${{
+												Math.abs(kpi1Metrics?.crecimientoAbsoluto ?? 0).toLocaleString() }}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -64,55 +79,65 @@
 					</div>
 
 					<div class="col-12">
-						<div class="card border-0 shadow-sm table-card">
-							<div class="card-header bg-white py-3 border-bottom-light">
-								<h6 class="mb-0 fw-bold text-dark x-small text-uppercase">Desglose Comparativo</h6>
+						<div class="card border-0 shadow-sm table-card bg-white">
+							<div class="card-header bg-transparent py-3 border-bottom-light">
+								<h6 class="mb-0 fw-bold text-dark x-small text-uppercase tracking-wider">Desglose
+									Detallado</h6>
 							</div>
 							<div class="card-body p-0">
 								<div class="table-responsive">
-									<table class="table table-hover align-middle mb-0">
-										<thead class="bg-light-subtle">
-											<tr class="x-small text-muted text-uppercase fw-bold">
-												<th class="ps-4 py-3">Categoría</th>
-												<th>Mes Actual</th>
-												<th>Sem. Pasado</th>
-												<th class="text-end">Crec. Absoluto</th>
-												<th class="text-end pe-4">Variación</th>
+									<table class="table align-middle mb-0">
+										<thead>
+											<tr class="x-small text-muted text-uppercase">
+												<th class="ps-4 py-3 border-0">Categoría</th>
+												<th class="border-0">Mes Actual</th>
+												<th class="border-0">Semestre pasado (Prom)</th>
+												<th class="border-0 text-end">Variación</th>
+												<th class="pe-4 border-0 text-end">Var. %</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr v-for="item in behaviorMetrics" :key="item.title">
-												<td class="ps-4">
-													<div class="d-flex align-items-center">
-														<div class="status-dot me-2 shadow-sm"
-															:style="`background-color: ${item.color}`"></div>
-														<span class="fw-bold text-dark small">{{ item.title }}</span>
+											<template v-if="hasData">
+												<tr v-for="(kpi, index) in kpiMetrics" :key="index">
+													<td class="ps-4">
+														<div class="d-flex align-items-center">
+															<div class="status-dot me-2" :style="{ backgroundColor: kpi.color }"></div>
+															<span class="fw-bold text-dark small">{{ kpi.segmento }}</span>
+														</div>
+													</td>
+													<td>
+														<div class="fw-bold text-dark small">${{ kpi.totalVentas.toLocaleString() }}</div>
+														<div class="x-small fst-italic">{{ kpi.clientes }} clientes</div>
+													</td>
+													<td>
+														<div class="text-secondary small">${{ kpi.totalVentas6M.toLocaleString() }}</div>
+														<div class="x-small text-muted-light">{{ kpi.clientes6M }} clientes</div>
+													</td>
+													<td class="text-end">
+														<div :class="[kpi.crecimientoAbsoluto >= 0 ? 'text-success' : 'text-danger', 'fw-bold small']">
+															{{ kpi.crecimientoAbsoluto >= 0 ? '+' : '' }}
+															${{ kpi.crecimientoAbsoluto.toLocaleString() }}
+														</div>
+													</td>
+													<td class="pe-4 text-end">
+														<span :class="[
+															kpi.crecimientoPorcentual >= 0 ? 'bg-light-success text-success' : 'bg-light-danger text-danger',
+															'badge rounded-pill fw-bold'
+														]">
+															<FontAwesomeIcon
+																:icon="kpi.crecimientoPorcentual >= 0 ? ['fas', 'caret-up'] : ['fas', 'caret-down']"
+																class="me-1" />
+															{{ Math.abs(kpi.crecimientoPorcentual).toFixed(2) }}%
+														</span>
+													</td>
+												</tr>
+											</template>
+											<tr v-else>
+												<td colspan="5" class="py-5 text-center">
+													<div class="text-muted">
+														<FontAwesomeIcon :icon="['fas', 'folder-open']" class="fs-3 mb-2 d-block mx-auto opacity-50" />
+														<p class="mb-0">No se encontraron registros para este periodo</p>
 													</div>
-												</td>
-												<td>
-													<div class="fw-bold text-dark small">${{
-														item.periodoActual.monto.toLocaleString() }}</div>
-													<div class="x-small text-muted">{{ item.periodoActual.clientes }}
-														cls</div>
-												</td>
-												<td>
-													<div class="text-secondary small">${{
-														item.periodoAnterior.monto.toLocaleString() }}</div>
-													<div class="x-small text-muted opacity-75">{{
-														item.periodoAnterior.clientes }} cls</div>
-												</td>
-												<td class="text-end">
-													<div class="small fw-semibold" :class="getTrendClass(item)">
-														{{ item.periodoActual.monto - item.periodoAnterior.monto >= 0 ?
-														'+' : '' }}${{ (item.periodoActual.monto -
-															item.periodoAnterior.monto).toLocaleString() }}
-													</div>
-												</td>
-												<td class="text-end pe-4">
-													<span :class="getTrendClass(item)"
-														class="fw-bold small px-2 py-1 rounded-pill bg-light">
-														{{ calculateVar(item) }}%
-													</span>
 												</td>
 											</tr>
 										</tbody>
@@ -121,7 +146,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -129,160 +153,78 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ref, computed, onUnmounted, watch, nextTick } from 'vue'
 import Chart from 'chart.js/auto'
+import { useDashboardStore } from '@/dashboard/store/dashboardStore'
+import type { Kpi1 } from '@/dashboard/types/metrics'
+
+const store = useDashboardStore()
+const kpi1Metrics = computed<Kpi1 | null>(() => store.data?.kpi1?.find(n => n.segmento === 'Recurrentes') ?? null)
+
+const hasData = computed(() => kpiMetrics.value && kpiMetrics.value.length > 0)
+const kpiMetrics = computed(() => {
+	const rawData = store.data?.kpi2 || []
+
+	const colorsPerSegmento: Record<string, string> = {
+		'Incremento en Venta': '#6366f1',
+		'Venta Estable': '#10b981',
+		'Decremento en Venta': '#f59e0b',
+		'Venta Perdida': '#ef4444'
+	}
+	return rawData.map(m => ({
+		...m,
+		color: colorsPerSegmento[m.segmento]
+	}))
+})
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null)
+let chartInstance: Chart | null = null
 
-const behaviorMetrics = reactive([
-	{
-		title: 'Estable',
-		percentage: 50,
-		color: '#00a3ff',
-		periodoAnterior: { monto: 8500, clientes: 60 },
-		periodoActual: { monto: 9271, clientes: 65 }
-	},
-	{
-		title: 'Incremento',
-		percentage: 20,
-		color: '#10b981',
-		periodoAnterior: { monto: 900, clientes: 30 },
-		periodoActual: { monto: 1200, clientes: 45 }
-	},
-	{
-		title: 'Decremento',
-		percentage: 20,
-		color: '#f59e0b',
-		periodoAnterior: { monto: 650, clientes: 12 },
-		periodoActual: { monto: 400, clientes: 8 }
-	},
-	{
-		title: 'Perdidos',
-		percentage: 10,
-		color: '#ef4444',
-		periodoAnterior: { monto: 300, clientes: 15 },
-		periodoActual: { monto: 0, clientes: 12 }
-	}
-])
+watch(() => kpiMetrics.value, async (newVal) => {
+	if (!newVal || newVal.length === 0) return
 
-const calculateVar = (item: any) => {
-	if (item.periodoAnterior.monto === 0 && item.periodoActual.monto === 0) return '0.0';
-	if (item.periodoAnterior.monto === 0) return '100.0';
-	return (((item.periodoActual.monto - item.periodoAnterior.monto) / item.periodoAnterior.monto) * 100).toFixed(1);
-}
+	await nextTick();
 
-const getTrendClass = (item: any) => {
-	const diff = item.periodoActual.monto - item.periodoAnterior.monto;
-	if (item.title === 'Perdidos' || diff < 0) return 'text-danger';
-	if (diff > 0) return 'text-success';
-	return 'text-muted';
-}
-
-onMounted(() => {
 	if (chartCanvas.value) {
-		const ctx = chartCanvas.value.getContext('2d');
-		if (ctx) {
-			new Chart(ctx, {
-				type: 'doughnut',
-				data: {
-					labels: behaviorMetrics.map(m => m.title),
-					datasets: [{
-						data: behaviorMetrics.map(m => m.percentage),
-						backgroundColor: behaviorMetrics.map(m => m.color),
-						borderWidth: 0,
-						hoverOffset: 15
-					}]
-				},
-				options: {
-					responsive: true,
-					maintainAspectRatio: false,
-					plugins: { legend: { display: false } },
-					cutout: '82%'
-				}
-			});
+		if (chartInstance) {
+			chartInstance.destroy()
 		}
+
+		chartInstance = new Chart(chartCanvas.value, {
+			type: 'doughnut',
+			data: {
+				labels: newVal.map(m => m.segmento),
+				datasets: [{
+					data: newVal.map(m => m.porcentajeVentas),
+					backgroundColor: newVal.map(m => m.color),
+					borderWidth: 2,
+					borderColor: '#ffffff'
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				cutout: '75%',
+				plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                // Esto hace que muestre: " Incremento en Venta: 50%"
+                                return ` ${label}: ${value}%`;
+                            }
+                        }
+                    }
+                }
+			}
+		})
 	}
-})
+}, { deep: true, immediate: true })
+
+onUnmounted(() => chartInstance?.destroy())
 </script>
 
-<style scoped>
-.bg-corporate {
-	background-color: #00a3ff;
-}
-
-.custom-indicator {
-	width: 4px;
-	height: 24px;
-	background-color: #00a3ff;
-	border-radius: 50px;
-}
-
-/* Banner Refinado */
-.main-recurrence-slim {
-	border-radius: 12px;
-	background: linear-gradient(135deg, #00a3ff 0%, #0086d4 100%);
-	box-shadow: 0 8px 16px rgba(0, 163, 255, 0.15) !important;
-}
-
-.past-period-highlight {
-	background-color: rgba(255, 255, 255, 0.12);
-	border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.text-white-50 {
-	color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Gráfica */
-.chart-container {
-	position: relative;
-	width: 100%;
-	height: 240px;
-}
-
-.chart-center-text {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-}
-
-/* Tabla */
-.table-card {
-	border: 1px solid #f1f5f9;
-	border-radius: 12px;
-}
-
-.border-bottom-light {
-	border-bottom: 1px solid #f1f5f9;
-}
-
-.table thead th {
-	border: 0;
-}
-
-.table tbody tr {
-	border-bottom: 1px solid #f8f9fa;
-}
-
-.status-dot {
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-}
-
-/* Utilidades */
-.x-small {
-	font-size: 0.72rem;
-	letter-spacing: 0.5px;
-}
-
-.tracking-wider {
-	letter-spacing: 1px;
-}
-
-canvas {
-	filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.06));
-}
-</style>
+<style scoped src="./styles.css"></style>

@@ -1,0 +1,99 @@
+.custom-indicator {
+	width: 4px;
+	height: 24px;
+	background-color: #00a3ff;
+	border-radius: 50px;
+}
+.text-blue-accent {
+	color: #0084d1;
+}
+.border-blue-custom {
+	border-color: #00a3ff !important;
+}
+.chart-container {
+	position: relative;
+	height: 260px;
+    width: 100%;
+}
+.chart-center-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.chart-center-text .fs-4 {
+    font-size: 1.75rem !important;
+}
+.table-card {
+	border: 1px solid #edf2f7;
+	border-radius: 12px;
+}
+.border-bottom-light {
+	border-bottom: 1px solid #f1f5f9;
+}
+.status-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+}
+.status-dot-sm {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+}
+.x-small {
+	font-size: 0.72rem;
+}
+.text-muted-light {
+	color: #a0aec0;
+}
+.table td {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	vertical-align: middle;
+}
+.table thead th {
+	background-color: transparent;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    border-top: none;
+    border-bottom: 2px solid #f1f5f9;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+@media (min-width: 768px) {
+	.border-end-md {
+		border-right: 1px solid #edf2f7;
+	}
+}
+.card-kpi-featured {
+    border: none !important; 
+    border-left: 4px solid #00a3ff !important;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.card-kpi-featured.is-negative {
+    border-left-color: #ef4444 !important;
+}
+.empty-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 15px solid #f8f9fa; /* Gris muy claro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.empty-chart-placeholder {
+    position: relative;
+    height: 200px; /* Ajusta según tu diseño */
+}
+
+/* Opcional: transición suave para la tabla */
+.table-card {
+    min-height: 200px;
+}

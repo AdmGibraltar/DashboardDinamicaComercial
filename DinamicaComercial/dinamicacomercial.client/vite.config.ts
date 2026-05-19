@@ -38,26 +38,29 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
     env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7092';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-    plugins: [
-        plugin()
-    ],
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    },
-    server: {
-        proxy: {
-            '^/metrics': {
-                target,
-                secure: false
+export default defineConfig(({ command }) => {
+    return {
+        plugins: [
+            plugin()
+        ],
+        resolve: {
+            alias: {
+                '@': fileURLToPath(new URL('./src', import.meta.url))
             }
         },
-        port: parseInt(env.DEV_SERVER_PORT || '60834'),
-        https: {
-            key: fs.readFileSync(keyFilePath),
-            cert: fs.readFileSync(certFilePath),
+        base: command === 'build' ? '/dinamicacomercial' : '/',
+        server: {
+            proxy: {
+                '^/api': {
+                    target,
+                    secure: false
+                }
+            },
+            port: parseInt(env.DEV_SERVER_PORT || '60834'),
+            https: {
+                key: fs.readFileSync(keyFilePath),
+                cert: fs.readFileSync(certFilePath),
+            }
         }
     }
 })

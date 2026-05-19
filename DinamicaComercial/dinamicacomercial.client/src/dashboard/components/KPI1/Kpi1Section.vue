@@ -6,7 +6,13 @@
 		</div>
 
 		<div class="row g-3 row-cols-1 row-cols-md-3 row-cols-xl-5">
-			<div class="col" v-for="(kpi, index) in kpiMetrics" :key="index">
+			<div
+				class="col"
+				v-for="(kpi, index) in kpiMetrics"
+				:key="index"
+				:style="{ cursor: kpi.segmento === 'Recurrentes' ? 'pointer' : 'default' }"
+				@click="emitScrollToKpi2(kpi.segmento)"
+			>
 				<div
 					class="card border-0 shadow-sm kpi-card h-100"
 					:class="isVentaTotal(kpi) ? 'card-total-highlight' : ''"
@@ -17,7 +23,7 @@
 							<h6 class="text-muted small text-uppercase fw-bold mb-0 tracking-wider">{{ kpi.segmento }}</h6>
 							<span :class="getStatusBadgeClass(kpi.crecimientoPorcentual)">
 								<FontAwesomeIcon :icon="kpi.crecimientoPorcentual >= 0 ? ['fas', 'chevron-up'] : ['fas', 'chevron-down']" />
-								{{ Math.abs(kpi.crecimientoPorcentual).toFixed(1) }}%
+								{{ Math.abs(kpi.crecimientoPorcentual).toFixed(2) }}%
 							</span>
 						</div>
 
@@ -27,9 +33,9 @@
 								:class="isVentaTotal(kpi) ? 'total-amount' : 'text-dark'">
 								${{ kpi.totalVentas.toLocaleString() }}
 							</h3>
-                            <div class="text-muted x-small d-flex align-items-center mt-1">
+                            <div class="text-muted d-flex align-items-center mt-1">
                                 <FontAwesomeIcon :icon="['fas', 'users']" class="me-1" />
-                                <span>
+                                <span class="fst-italic">
 									<strong>{{ kpi.clientes }}</strong> Clientes
 								</span>
                             </div>
@@ -37,7 +43,7 @@
 
 						<div class="bg-light rounded-3 p-2 mb-2">
 							<div class="d-flex justify-content-between align-items-center mb-1">
-								<span class="text-muted x-small fw-semibold">Semestre Pasado</span>
+								<span class="text-muted x-small fw-semibold">Semestre Pasado (Prom)</span>
 								<span class="fw-bold small text-secondary">${{ kpi.totalVentas6M.toLocaleString() }}</span>
 							</div>
 
@@ -71,6 +77,7 @@ import { useDashboardStore } from '@/dashboard/store/dashboardStore'
 import { computed } from 'vue'
 import type { Kpi1 } from '@/dashboard/types/metrics'
 
+const emit = defineEmits(['scroll-to-kpi2'])
 const store = useDashboardStore()
 
 const kpiMetrics = computed(() => {
@@ -83,12 +90,16 @@ const kpiMetrics = computed(() => {
 })
 
 const getStatusBadgeClass = (value: number) => {
-	if (value > 0) return 'badge rounded-pill bg-success-subtle text-success fw-bold'
-	if (value < 0) return 'badge rounded-pill bg-danger-subtle text-danger fw-bold'
-	return 'badge rounded-pill bg-secondary-subtle text-secondary fw-bold'
+	if (value > 0) return 'p-2 badge rounded-pill bg-success-subtle text-success fw-bold'
+	if (value < 0) return 'p-2 badge rounded-pill bg-danger-subtle text-danger fw-bold'
+	return 'p-2 badge rounded-pill bg-secondary-subtle text-secondary fw-bold'
 }
 
 const isVentaTotal = (kpi: Kpi1) => kpi.segmento === 'Venta Total'
+
+const emitScrollToKpi2 = (segmento: string) => {
+	if (segmento === 'Recurrentes') emit('scroll-to-kpi2')
+}
 </script>
 
 <style scoped src="./styles.css"></style>

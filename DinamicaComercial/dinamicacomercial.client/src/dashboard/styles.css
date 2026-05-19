@@ -1,0 +1,52 @@
+.dashboard-content {
+    min-height: calc(100vh - 70px); 
+    display: flex;
+    flex-direction: column;
+}
+.container-fluid {
+    animation: fadeIn 0.5s ease-in-out;
+}
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        background: linear-gradient(135deg, #0056b3, #004085);
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.95);
+    }
+
+    svg {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+}
+@media (max-width: 768px) {
+    .scroll-to-top-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        
+        i {
+            font-size: 0.9rem;
+        }
+    }
+}

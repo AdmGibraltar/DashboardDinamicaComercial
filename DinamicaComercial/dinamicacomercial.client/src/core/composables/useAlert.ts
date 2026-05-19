@@ -1,4 +1,4 @@
-import Swal, { type SweetAlertResult } from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 interface Alert {
     loading(title?: string, text?: string): void

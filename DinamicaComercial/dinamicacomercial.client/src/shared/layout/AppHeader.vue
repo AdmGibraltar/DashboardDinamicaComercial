@@ -11,7 +11,7 @@
             </a>
 
             <div class="ms-auto">
-                <a href="#" class="back-link d-flex align-items-center text-decoration-none px-2 py-1 rounded">
+                <a :href="backUrl" class="back-link d-flex align-items-center text-decoration-none px-2 py-1 rounded">
                     <FontAwesomeIcon icon="fa-arrow-left" class="me-2 icon-sm" />
                     <span class="d-none d-sm-inline fw-semibold">Regresar a sianweb</span>
                 </a>
@@ -22,6 +22,21 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { onMounted, ref } from 'vue'
+
+const backUrl = ref<string>('#')
+onMounted(() => {
+    if (import.meta.env.MODE === 'production') {
+        const referrer = document.referrer
+        if (referrer && !referrer.includes(window.location.hostname + `/${import.meta.env.VITE_IIS_APP_NAME}`)) {
+            localStorage.setItem('url_retorno', referrer)
+            backUrl.value = referrer
+        } else {
+            const savedUrl = localStorage.getItem('url_retorno')
+            backUrl.value = savedUrl || '#'
+        }
+    }
+})
 </script>
 
 <style scoped>
@@ -53,6 +68,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 }
 .back-link:hover :deep(svg) {
     filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    background-color: rgba(255, 255, 255, 0.15); /* Efecto de botón sutil */
+    color: #ffffff;
 }
 .icon-sm {
     font-size: 0.85rem;

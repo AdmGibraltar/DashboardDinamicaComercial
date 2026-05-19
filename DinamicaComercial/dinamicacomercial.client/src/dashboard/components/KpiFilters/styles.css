@@ -1,0 +1,56 @@
+.filter-bar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 0;
+}
+:deep(.filter-label) {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 6px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+:deep(.custom-input) {
+    color: #1e293b;
+    height: 35px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+:deep(.custom-input:focus) {
+    background-color: #ffffff;
+    border-color: #00a3ff;
+    box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
+}
+.btn-primary {
+    background-color: #00a3ff;
+    border-color: #00a3ff;
+    height: 35px;
+}
+.btn-primary:hover {
+    background-color: #0086d4;
+    border-color: #0086d4;
+    transform: translateY(-1px);
+}
+:deep(.dp__input) {
+    height: 35px;
+    min-height: 35px;
+    font-size: 0.85rem;
+    border-radius: 0.375rem;
+    text-transform: capitalize !important;
+    font-weight: 600 !important;
+}
+:deep(.dp__overlay_cell),
+:deep(.dp__overlay_cell_active),
+:deep(.dp__overlay_cell_pad) {
+    text-transform: capitalize !important;
+}
+.row-gap-3 {
+    row-gap: 1rem !important;
+}
+@media (max-width: 768px) {
+    .btn-primary {
+        margin-top: 10px;
+    }
+}

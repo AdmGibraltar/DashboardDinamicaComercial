@@ -1,0 +1,96 @@
+.modal-table-card {
+    border: 1px solid #edf2f7;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.border-bottom-light {
+    border-bottom: 1px solid #f1f5f9;
+}
+.x-small {
+    font-size: 0.72rem;
+}
+.input-custom-clean {
+    font-size: 0.82rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+.input-custom-clean:focus {
+    border-color: #00a3ff !important;
+    box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1) !important;
+}
+.badge-decrement {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+}
+.bg-light-indigo-custom {
+    background-color: #f5f7ff;
+    border-bottom: 2px solid #6366f1;
+}
+.text-indigo {
+    color: #6366f1;
+}
+.border-indigo {
+    border-color: #6366f1 !important;
+}
+.bg-selected {
+    background-color: #f0f7ff !important;
+}
+.table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 700;
+}
+.table-sm-custom {
+    font-size: 0.90rem;
+    table-layout: fixed;
+    width: 100%;
+}
+.col-fixed-sm {
+    width: 160px !important;
+    max-width: 160px !important;
+    min-width: 160px !important;
+}
+.table-sm-custom th {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+.table-sm-custom td {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+}
+.x-small {
+    font-size: 0.68rem;
+}
+.input-filled {
+    background-color: #e0f2fe !important;
+    border-color: #0ea5e9 !important;
+    color: #0369a1 !important;
+    font-weight: 600;
+}
+.input-filled-success {
+    background-color: #f0fdf4 !important;
+    border-color: #22c55e !important;
+    color: #15803d !important;
+}
+.table-sm-custom .form-check-input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0;
+    cursor: pointer;
+    border: 1.5px solid #cbd5e1;
+}
+.bg-light-indigo-custom .form-check-input {
+    border-color: #6366f1;
+}
+.transition-all {
+    transition: all 0.3s ease;
+}
+.badge-pending {
+    background-color: #ebf5ff;
+    color: #007bff;
+    font-size: 0.7rem;
+    margin-left: 5px;
+}
