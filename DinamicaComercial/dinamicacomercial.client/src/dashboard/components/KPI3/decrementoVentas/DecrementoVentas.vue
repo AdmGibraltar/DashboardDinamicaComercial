@@ -193,8 +193,7 @@ const filterRik = ref<number | null>(null)
 const bulkMotivoSelected = ref<number | null>(null)
 const showCompleted = ref<boolean>(false)
 
-//const showButton = computed(() => (store.data?.isClosingMonth || false) && !authStore.isSIANCENTRALMode)
-const showButton = computed(() => true)
+const showButton = computed(() => (store.data?.isClosingMonth || false) && !authStore.isSIANCENTRALMode)
 
 const motivos = computed(() => store.catalogs.motivosDecremento)
 const list = computed(() => store.decrementoVentas)
