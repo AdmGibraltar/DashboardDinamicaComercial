@@ -21,8 +21,8 @@ namespace DinamicaComercial.Server.Persistence.Repositories
                 {
                     year = query.Year,
                     month = query.Month,
-                    UenId = query.IdUen,
-                    SegmentoId = query.IdSeg,
+                    idUen = query.IdUen,
+                    idSeg = query.IdSeg,
                     rikId = query.RikId,
                     sucursalesId = query.SucursalId
                 };
@@ -53,8 +53,8 @@ namespace DinamicaComercial.Server.Persistence.Repositories
                 {
                     year = query.Year,
                     month = query.Month,
-                    UenId = query.IdUen,
-                    SegmentoId = query.IdSeg,
+                    idUen = query.IdUen,
+                    idSeg = query.IdSeg,
                     rikId = query.RikId,
                     sucursalesId = query.SucursalId
                 };
