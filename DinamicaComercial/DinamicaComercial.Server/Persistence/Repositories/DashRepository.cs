@@ -8,21 +8,20 @@ namespace DinamicaComercial.Server.Persistence.Repositories
 {
     public class DashRepository(
         IConfiguration configuration,
-        IDbConnectionProvider connectionProvider,
         ISqlConnectionFactory factory
     ) : IDashRepository
     {
         public async Task<IReadOnlyList<Kpi1>> GetKpi1Async(GetDashQuery query)
         {
-            using var db = await connectionProvider.GetConnection(query.SucursalId);
+            using var db = factory.CreateSIANWEBCENTRALConnection();
             try
             {
                 var parameters = new
                 {
                     year = query.Year,
                     month = query.Month,
-                    idUen = query.IdUen,
-                    idSeg = query.IdSeg,
+                    uenId = query.IdUen,
+                    segmentoId = query.IdSeg,
                     rikId = query.RikId,
                     sucursalesId = query.SucursalId
                 };
@@ -46,15 +45,15 @@ namespace DinamicaComercial.Server.Persistence.Repositories
 
         public async Task<IReadOnlyList<Kpi2>> GetKpi2Async(GetDashQuery query)
         {
-            using var db = await connectionProvider.GetConnection(query.SucursalId);
+            using var db = factory.CreateSIANWEBCENTRALConnection();
             try
             {
                 var parameters = new
                 {
                     year = query.Year,
                     month = query.Month,
-                    idUen = query.IdUen,
-                    idSeg = query.IdSeg,
+                    uenId = query.IdUen,
+                    segmentoId = query.IdSeg,
                     rikId = query.RikId,
                     sucursalesId = query.SucursalId
                 };

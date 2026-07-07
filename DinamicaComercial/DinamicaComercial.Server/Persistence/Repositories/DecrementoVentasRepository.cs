@@ -72,10 +72,9 @@ namespace DinamicaComercial.Server.Persistence.Repositories
                 }
 
                 Console.WriteLine(sql);
-                int monthTemp = 2;
                 var dbos = await db.QueryAsync<DecrementoVentasResponse>(sql, new
                 {
-                    month = monthTemp,//closeDate.Month,
+                    month = closeDate.Month,
                     year = closeDate.Year,
                     sucursalId = query.SucursalId,
                     rikId = query.RikId
