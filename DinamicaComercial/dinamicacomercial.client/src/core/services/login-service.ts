@@ -38,6 +38,11 @@ const getAuthUrl = () => {
 
     if (referrer) {
         try {
+            if (referrer.toLowerCase().includes('https://siancentral.sianweb.com.mx') || referrer.toLowerCase().includes('http://40.84.229.61')) {
+                activeApp = 'siancentral'
+                sessionStorage.setItem(STORAGE_KEY, activeApp)
+                return `${referrer}siancentral/externalAuth.ashx`
+            }
             const url = new URL(referrer)
             const pathParts = url.pathname.split('/').filter(p => p !== '')
             if (pathParts.length > 0) {
